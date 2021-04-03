@@ -141,7 +141,7 @@ public class BinaryTreeTest {
     @Test
     public void add123_redNodeHasRedChild() {
         tree.inserts(new int[]{1, 2, 3});
-        assertTrue(tree.redNodeWithRedChild());
+        assertTrue(tree.redViolation());
     }
 
     @Test
@@ -159,7 +159,7 @@ public class BinaryTreeTest {
     @Test
     public void add123_redNodeHasBlackChild() {
         tree.insertsRB(new int[]{1, 2, 3});
-        assertFalse(tree.redNodeWithRedChild());
+        assertFalse(tree.redViolation());
     }
 
     @Test

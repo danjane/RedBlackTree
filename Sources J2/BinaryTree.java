@@ -197,7 +197,7 @@ public class BinaryTree {
         return n.colour.equals(Colour.RED);
     }
 
-    public boolean redNodeWithRedChild() {
+    public boolean redViolation() {
         Node possibleRed = redNodeWithRedChildRecursive(root, false);
         return (possibleRed != null && isRed(possibleRed));
     }

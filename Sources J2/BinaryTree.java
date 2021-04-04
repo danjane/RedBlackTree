@@ -18,6 +18,44 @@ public class BinaryTree {
         }
     }
 
+    static class FamilyNode extends Node {
+        Node grandparent, uncle;
+        Colour parentColour, grandparentColour, uncleColour;
+
+        public FamilyNode(Node node){
+            super(node.key);
+            left = node.left;
+            right = node.right;
+            parent = node.parent;
+            colour = node.colour;
+
+            if (parent==null) {
+                grandparent = null;
+                uncle = null;
+                parentColour = null;
+                grandparentColour = null;
+                uncleColour = null;
+            }
+            else {
+                grandparent = parent.parent;
+                if (grandparent==null) {
+                    grandparentColour = null;
+                    uncleColour = null;
+                } else {
+                    grandparentColour = grandparent.colour;
+                    if (grandparent.left == node)
+                        uncle = grandparent.right;
+                    else
+                        uncle = grandparent.left;
+                    if (uncle==null)
+                        uncleColour = null;
+                    else
+                        uncleColour = uncle.colour;
+                }
+            }
+        }
+    }
+
     private Node root = null;
 
     public boolean isEmpty() {
@@ -50,21 +88,21 @@ public class BinaryTree {
     }
 
     public void insertRB(int key) {
-        root = insertRecursiveRB(root, key);
-        root.colour = Colour.BLACK;
+        root = insertRecursiveRB(root, key, null);
+        root.colour = Colour.BLACK; //TODO: should this be in fixRBtree?
     }
 
     public void insertsRB(int[] keys) {
         for (int key : keys) {
             insertRB(key);
-            if (key == 3) // TODO: refactor the recolouring step
-                root.right.colour = Colour.BLACK;
         }
     }
 
-    private Node insertRecursiveRB(Node root, int key) {
+    private Node insertRecursiveRB(Node root, int key, Node parent) {
         if (root == null) {
             root = new Node(key);
+            root.parent = parent;
+            fixRBtree(root);
 /*          1. Every node is either red or black.
             2. The root is black.
             3. Every leaf (NIL) is black.
@@ -73,14 +111,24 @@ public class BinaryTree {
             same number of black nodes. */
         }
         else if (key < root.key) {
-            root.left = insertRecursiveRB(root.left, key);
-            root.left.parent = root;
+            root.left = insertRecursiveRB(root.left, key, root);
         }
         else {
-            root.right = insertRecursiveRB(root.right, key);
-            root.right.parent = root;
+            root.right = insertRecursiveRB(root.right, key, root);
         }
         return root;
+    }
+
+    private void fixRBtree(Node node) {
+        FamilyNode familyNode = new FamilyNode(node);
+        if (familyNode.uncleColour==Colour.RED)
+            redUncleSoRecolour(familyNode);
+    }
+
+    private void redUncleSoRecolour(FamilyNode familyNode) {
+        familyNode.parent.colour = Colour.BLACK;
+        familyNode.uncle.colour = Colour.BLACK;
+        familyNode.grandparent.colour = Colour.RED;
     }
 
     public void delete(int key) {
@@ -265,12 +313,16 @@ public class BinaryTree {
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
         // tree.inserts(new int[] {11,2,14,1,7,15,5,8,4});
-        tree.inserts(new int[]{2,1,4,3,5});
+        tree.insertsRB(new int[]{2,1,3,4});
+        System.out.println(tree.root.colour);
+
+        /*
         tree.leftRotateOnKey(2);
         int[] vs = tree.preorderValues();
         for (int v : vs) {
             System.out.println("This is : " + v);
         }
+        */
     }
 
 }

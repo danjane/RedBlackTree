@@ -157,12 +157,6 @@ public class BinaryTreeTest {
     }
 
     @Test
-    public void add123_redNodeHasBlackChild() {
-        tree.insertsRB(new int[]{1, 2, 3});
-        assertFalse(tree.redViolation());
-    }
-
-    @Test
     public void add21435_values12345() {
         tree.inserts(new int[]{2,1,4,3,5});
         assertArrayEquals(new int[]{1,2,3,4,5}, tree.values());
@@ -188,5 +182,17 @@ public class BinaryTreeTest {
         tree.leftRotateOnKey(2);
         tree.rightRotateOnKey(4);
         assertArrayEquals(values, tree.preorderValues());
+    }
+
+    @Test
+    public void add2134_RedUncleSoRecolour() {
+        tree.insertsRB(new int[]{2,1,3,4});
+        assertFalse(tree.redViolation());
+    }
+
+    @Test
+    public void add3241_RedUncleSoRecolour() {
+        tree.insertsRB(new int[]{3,2,4,1});
+        assertFalse(tree.redViolation());
     }
 }

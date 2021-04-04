@@ -32,6 +32,7 @@ public class BinaryTree {
             if (parent==null)
                 nullParent();
             else {
+                parentColour = parent.colour;
                 grandparent = parent.parent;
                 if (grandparent==null)
                     nullGrandparent();
@@ -112,7 +113,7 @@ public class BinaryTree {
         if (root == null) {
             root = new Node(key);
             root.parent = parent;
-            fixRBtree(root);
+            checkForLocalRedViolation(root);
 /*          1. Every node is either red or black.
             2. The root is black.
             3. Every leaf (NIL) is black.
@@ -129,10 +130,20 @@ public class BinaryTree {
         return root;
     }
 
-    private void fixRBtree(Node node) {
-        FamilyNode familyNode = new FamilyNode(node);
-        if (familyNode.uncleColour==Colour.RED)
+    private void checkForLocalRedViolation(Node node) {
+        if (isRed(node)) {
+            FamilyNode fNode = new FamilyNode(node);
+            if (fNode.parentColour == Colour.RED)
+                fixRBtree(fNode);
+        }
+    }
+
+    private void fixRBtree(FamilyNode familyNode) {
+        if (familyNode.uncleColour==Colour.RED) {
             redUncleSoRecolour(familyNode);
+            if (familyNode.grandparent != null)
+                checkForLocalRedViolation(familyNode.grandparent);
+        }
     }
 
     private void redUncleSoRecolour(FamilyNode familyNode) {

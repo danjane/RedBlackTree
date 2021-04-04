@@ -29,30 +29,40 @@ public class BinaryTree {
             parent = node.parent;
             colour = node.colour;
 
-            if (parent==null) {
-                grandparent = null;
-                uncle = null;
-                parentColour = null;
-                grandparentColour = null;
-                uncleColour = null;
-            }
+            if (parent==null)
+                nullParent();
             else {
                 grandparent = parent.parent;
-                if (grandparent==null) {
-                    grandparentColour = null;
-                    uncleColour = null;
-                } else {
-                    grandparentColour = grandparent.colour;
-                    if (grandparent.left == node)
-                        uncle = grandparent.right;
-                    else
-                        uncle = grandparent.left;
-                    if (uncle==null)
-                        uncleColour = null;
-                    else
-                        uncleColour = uncle.colour;
-                }
+                if (grandparent==null)
+                    nullGrandparent();
+                else
+                    notNullGrandparent();
             }
+        }
+
+        private void nullParent() {
+            grandparent = null;
+            uncle = null;
+            parentColour = null;
+            grandparentColour = null;
+            uncleColour = null;
+        }
+
+        private void nullGrandparent() {
+            grandparentColour = null;
+            uncleColour = null;
+        }
+
+        private void notNullGrandparent() {
+            grandparentColour = grandparent.colour;
+            if (grandparent.left == this)
+                uncle = grandparent.right;
+            else
+                uncle = grandparent.left;
+            if (uncle==null)
+                uncleColour = null;
+            else
+                uncleColour = uncle.colour;
         }
     }
 

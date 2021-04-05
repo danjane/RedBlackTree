@@ -104,8 +104,9 @@ public class BinaryTree {
     }
 
     public void insertRB(int key) {
-        root = insertRecursiveRB(root, key, null);
+        root = insertRecursiveRB(root, key);
         checkForLocalRedViolation(newNode);
+        newNode = null;
         root.colour = Colour.BLACK; //TODO: should this be in fixRBtree?
     }
 
@@ -115,17 +116,18 @@ public class BinaryTree {
         }
     }
 
-    private Node insertRecursiveRB(Node root, int key, Node parent) {
+    private Node insertRecursiveRB(Node root, int key) {
         if (root == null) {
             root = new Node(key);
-            root.parent = parent;
             newNode = root;
         }
         else if (key < root.key) {
-            root.left = insertRecursiveRB(root.left, key, root);
+            root.left = insertRecursiveRB(root.left, key);
+            root.left.parent = root;
         }
         else {
-            root.right = insertRecursiveRB(root.right, key, root);
+            root.right = insertRecursiveRB(root.right, key);
+            root.right.parent = root;
         }
         return root;
     }

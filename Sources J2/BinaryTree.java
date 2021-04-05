@@ -19,7 +19,7 @@ public class BinaryTree {
         }
 
         public String toString() {
-            return String.valueOf(key) + ", " + String.valueOf(colour);
+            return key + ", " + colour;
         }
     }
 

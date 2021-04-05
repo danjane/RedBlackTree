@@ -7,7 +7,7 @@ public class BinaryTree {
     enum Colour{RED, BLACK}
     enum GrandType{LL, LR, RR, RL}
 
-    static class Node {
+    static class Node implements TreePrinter.PrintableNode {
         int key;
         Node left, right, parent;
         Colour colour;
@@ -16,6 +16,21 @@ public class BinaryTree {
             key = data;
             left = right = parent = null;
             colour = Colour.RED;
+        }
+
+        @Override
+        public Node getLeft() {
+            return left;
+        }
+
+        @Override
+        public Node getRight() {
+            return right;
+        }
+
+        @Override
+        public String getText() {
+            return toString();
         }
 
         public String toString() {
@@ -334,16 +349,17 @@ public class BinaryTree {
 
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
+        TreePrinter treePrinter = new TreePrinter();
 
         tree.insertsRB(new int[] {11,2,14,1,7,15,5,8});
         System.out.println(tree.redViolation());
         System.out.println(tree.blackViolation());
-        System.out.println(tree.root.colour);
+        treePrinter.print(tree.root);
 
         tree.insertRB(4);
         System.out.println(tree.redViolation());
         System.out.println(tree.blackViolation());
-        System.out.println(tree.root.colour);
+        treePrinter.print(tree.root);
     }
 
 }

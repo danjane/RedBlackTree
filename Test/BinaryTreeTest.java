@@ -206,9 +206,8 @@ public class BinaryTreeTest {
 
     @Test
     public void add321_LLrotation() {
-        int[] values = new int[]{3,2,1};
-        tree.insertsRB(values);
-        assertArrayEquals(values, tree.values());
+        tree.insertsRB(new int[]{3,2,1});
+        assertArrayEquals(new int[]{1,2,3}, tree.values());
         assertFalse(tree.redViolation());
     }
 }

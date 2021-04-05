@@ -5,6 +5,7 @@ import java.util.List;
 public class BinaryTree {
 
     enum Colour{RED, BLACK}
+    enum GrandType{LL, RR}
 
     static class Node {
         int key;
@@ -25,6 +26,7 @@ public class BinaryTree {
     static class FamilyNode extends Node {
         Node grandparent, uncle;
         Colour parentColour, grandparentColour, uncleColour;
+        GrandType grandType;
 
         public FamilyNode(Node node){
             super(node.key);
@@ -32,6 +34,7 @@ public class BinaryTree {
             right = node.right;
             parent = node.parent;
             colour = node.colour;
+            grandType = null;
 
             if (parent==null)
                 nullParent();
@@ -60,10 +63,14 @@ public class BinaryTree {
 
         private void notNullGrandparent() {
             grandparentColour = grandparent.colour;
-            if (grandparent.left == this)
+            if (grandparent.left == this.parent) {
+                grandType = GrandType.LL;
                 uncle = grandparent.right;
-            else
+            }
+            else {
+                grandType = GrandType.RR;
                 uncle = grandparent.left;
+            }
             if (uncle==null)
                 uncleColour = null;
             else
@@ -153,7 +160,10 @@ public class BinaryTree {
                 checkForLocalRedViolation(familyNode.grandparent);
         }
         else
-            leftRotate(familyNode.grandparent);
+            if (familyNode.grandType==GrandType.RR)
+                leftRotate(familyNode.grandparent);
+            else
+                rightRotate(familyNode.grandparent);
     }
 
     private void redUncleSoRecolour(FamilyNode familyNode) {
@@ -317,7 +327,8 @@ public class BinaryTree {
         node_x.parent = node_y.parent;
 
         node_y.left = node_x.right;
-        node_y.left.parent = node_y;
+        if (node_y.left != null)
+            node_y.left.parent = node_y;
 
         node_x.right = node_y;
         node_y.parent = node_x;
@@ -345,7 +356,7 @@ public class BinaryTree {
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
         // tree.inserts(new int[] {11,2,14,1,7,15,5,8,4});
-        tree.insertsRB(new int[]{1,2,3});
+        tree.insertsRB(new int[]{3,2,1});
         System.out.println(tree.root.colour);
 
         /*

@@ -280,14 +280,10 @@ public class BinaryTree {
         if (node == null) return new ArrayList<>(Collections.singletonList(1));
         List<Integer> bhs = getBlackHeightsRecursive(node.left);
         bhs.addAll(getBlackHeightsRecursive(node.right));
-        if (isBlack(node))
+        if (!isRed(node))
             for (int i = 0; i < bhs.size(); i++)
                 bhs.set(i, bhs.get(i) + 1);
         return bhs;
-    }
-
-    private boolean isBlack(Node n) {
-        return n.colour.equals(Colour.BLACK);
     }
 
     private boolean isRed(Node n) {

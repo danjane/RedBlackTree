@@ -164,8 +164,7 @@ public class BinaryTree {
     private void fixRBtree(FamilyNode familyNode) {
         if (familyNode.uncleColour==Colour.RED) {
             redUncleSoRecolour(familyNode);
-            if (familyNode.grandparent != null) //TODO: this is always true?
-                checkForLocalRedViolation(familyNode.grandparent);
+            checkForLocalRedViolation(familyNode.grandparent);
         }
         else {
             switch (familyNode.grandType) {

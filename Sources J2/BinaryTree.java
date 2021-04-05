@@ -96,8 +96,7 @@ public class BinaryTree {
     public void insertRB(int key) {
         root = insertRecursiveRB(root, key);
         checkForLocalRedViolation(newNode);
-        newNode = null;
-        root.colour = Colour.BLACK; //TODO: should this be in fixRBtree?
+        root.colour = Colour.BLACK;
     }
 
     public void insertsRB(int[] keys) {

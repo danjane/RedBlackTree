@@ -87,7 +87,7 @@ public class BinaryTree {
     }
 
     private Node root = null;
-    private Node newNode = null; //TODO: remove this with a functional paradigm
+    private Node newNode = null; //pointer to the node just added
 
     public boolean isEmpty() {
         return root==null;
@@ -334,19 +334,16 @@ public class BinaryTree {
 
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
-        tree.insertsRB(new int[] {11,2,14,1,7,15,5,8,4});
-        // tree.insertsRB(new int[]{1,3,2});
+
+        tree.insertsRB(new int[] {11,2,14,1,7,15,5,8});
         System.out.println(tree.redViolation());
         System.out.println(tree.blackViolation());
         System.out.println(tree.root.colour);
 
-        /*
-        tree.leftRotateOnKey(2);
-        int[] vs = tree.preorderValues();
-        for (int v : vs) {
-            System.out.println("This is : " + v);
-        }
-        */
+        tree.insertRB(4);
+        System.out.println(tree.redViolation());
+        System.out.println(tree.blackViolation());
+        System.out.println(tree.root.colour);
     }
 
 }

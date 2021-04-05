@@ -8,6 +8,11 @@ public class BinaryTree {
     enum GrandType{LL, LR, RR, RL}
 
     static class Node implements TreePrinter.PrintableNode {
+
+        // public static final String ANSI_RESET = "\u001B[0m";
+        // public static final String ANSI_BLACK = "\u001B[30m";
+        // public static final String ANSI_RED = "\u001B[31m";
+
         int key;
         Node left, right, parent;
         Colour colour;
@@ -31,6 +36,12 @@ public class BinaryTree {
         @Override
         public String getText() {
             return toString();
+            /* Bugger, can't get this to work with offsets
+            if (colour==Colour.BLACK)
+                return ANSI_BLACK + key + ANSI_RESET;
+            else
+                return ANSI_RED + key + ANSI_RESET;
+            */
         }
 
         public String toString() {
@@ -349,17 +360,16 @@ public class BinaryTree {
 
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
-        TreePrinter treePrinter = new TreePrinter();
 
         tree.insertsRB(new int[] {11,2,14,1,7,15,5,8});
         System.out.println(tree.redViolation());
         System.out.println(tree.blackViolation());
-        treePrinter.print(tree.root);
+        TreePrinter.print(tree.root);
 
         tree.insertRB(4);
         System.out.println(tree.redViolation());
         System.out.println(tree.blackViolation());
-        treePrinter.print(tree.root);
+        TreePrinter.print(tree.root);
     }
 
 }

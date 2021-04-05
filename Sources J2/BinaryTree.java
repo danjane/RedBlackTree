@@ -87,35 +87,10 @@ public class BinaryTree {
     }
 
     private Node root = null;
-    private Node newNode = null;
+    private Node newNode = null; //TODO: remove this with a functional paradigm
 
     public boolean isEmpty() {
         return root==null;
-    }
-
-    public void insert(int key) {
-        root = insertRecursive(root, key);
-    }
-
-    private Node insertRecursive(Node root, int key) {
-        if (root == null) {
-            root = new Node(key);
-        }
-        else if (key < root.key) {
-            root.left = insertRecursive(root.left, key);
-            root.left.parent = root;
-        }
-        else {
-            root.right = insertRecursive(root.right, key);
-            root.right.parent = root;
-        }
-        return root;
-    }
-
-    public void inserts(int[] xs) {
-        for (int x : xs) {
-            insert(x);
-        }
     }
 
     public void insertRB(int key) {

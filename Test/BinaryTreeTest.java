@@ -150,22 +150,6 @@ public class BinaryTreeTest {
     }
 
     @Test
-    public void add21435LeftRotate_is42135() {
-        tree.insertsRB(new int[]{2,1,4,3,5});
-        tree.leftRotateOnKey(2);
-        assertArrayEquals(new int[]{4,2,1,3,5}, tree.preorderValues());
-    }
-
-    @Test
-    public void add21435LeftRightRotate_is21435() {
-        int[] values = new int[]{2,1,4,3,5};
-        tree.insertsRB(values);
-        tree.leftRotateOnKey(2);
-        tree.rightRotateOnKey(4);
-        assertArrayEquals(values, tree.preorderValues());
-    }
-
-    @Test
     public void add2134_RedUncleSoRecolour() {
         tree.insertsRB(new int[]{2,1,3,4});
         assertFalse(tree.redViolation());

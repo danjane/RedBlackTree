@@ -357,26 +357,15 @@ public class BinaryTree {
             node_x.parent.right = node_x;
     }
 
-    public void leftRotateOnKey(int key) {
-        // For debugging, to allow a test of leftRotate
-        Node node = findRecursive(root, key);
-        leftRotate(node);
-    }
-
-    public void rightRotateOnKey(int key) {
-        // For debugging, to allow a test of rightRotate
-        Node node = findRecursive(root, key);
-        rightRotate(node);
-    }
-
-
     static class Empty extends RuntimeException {
     }
 
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
-        // tree.inserts(new int[] {11,2,14,1,7,15,5,8,4});
-        tree.insertsRB(new int[]{1,3,2});
+        tree.insertsRB(new int[] {11,2,14,1,7,15,5,8,4});
+        // tree.insertsRB(new int[]{1,3,2});
+        System.out.println(tree.redViolation());
+        System.out.println(tree.blackViolation());
         System.out.println(tree.root.colour);
 
         /*

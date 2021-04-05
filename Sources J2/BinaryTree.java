@@ -5,7 +5,7 @@ import java.util.List;
 public class BinaryTree {
 
     enum Colour{RED, BLACK}
-    enum GrandType{LL, RR}
+    enum GrandType{LL, LR, RR, RL}
 
     static class Node {
         int key;
@@ -24,12 +24,13 @@ public class BinaryTree {
     }
 
     static class FamilyNode extends Node {
-        Node grandparent, uncle;
+        Node grandparent, uncle, underlying;
         Colour parentColour, grandparentColour, uncleColour;
         GrandType grandType;
 
         public FamilyNode(Node node){
             super(node.key);
+            underlying = node;
             left = node.left;
             right = node.right;
             parent = node.parent;
@@ -64,12 +65,19 @@ public class BinaryTree {
         private void notNullGrandparent() {
             grandparentColour = grandparent.colour;
             if (grandparent.left == this.parent) {
-                grandType = GrandType.LL;
                 uncle = grandparent.right;
+                if (parent.left == underlying)
+                    grandType = GrandType.LL;
+                else
+                    grandType = GrandType.LR;
             }
             else {
-                grandType = GrandType.RR;
                 uncle = grandparent.left;
+                if (parent.left == underlying)
+                    grandType = GrandType.RL;
+                else
+                    grandType = GrandType.RR;
+
             }
             if (uncle==null)
                 uncleColour = null;
@@ -159,11 +167,26 @@ public class BinaryTree {
             if (familyNode.grandparent != null)
                 checkForLocalRedViolation(familyNode.grandparent);
         }
-        else
-            if (familyNode.grandType==GrandType.RR)
-                leftRotate(familyNode.grandparent);
-            else
-                rightRotate(familyNode.grandparent);
+        else {
+            switch (familyNode.grandType) {
+                case RR:
+                    leftRotate(familyNode.grandparent);
+                    break;
+                case RL:
+                    rightRotate(familyNode.parent);
+                    leftRotate(familyNode.grandparent);
+                    break;
+                case LL:
+                    rightRotate(familyNode.grandparent);
+                    break;
+                case LR:
+                    leftRotate(familyNode.parent);
+                    rightRotate(familyNode.grandparent);
+                    break;
+            }
+            familyNode.grandparent.colour = Colour.RED;
+            familyNode.parent.colour = Colour.BLACK;
+        }
     }
 
     private void redUncleSoRecolour(FamilyNode familyNode) {
@@ -260,6 +283,19 @@ public class BinaryTree {
         return root.colour;
     }
 
+    public boolean blackViolation() {
+        if (isEmpty())
+            return false;
+        int[] blackHeights = blackHeights();
+        if (blackHeights.length==0)
+            return true;
+        int first = blackHeights[0];
+        for (int h: blackHeights)
+            if (h != first)
+                return true;
+        return false;
+    }
+
     public int[] blackHeights() {
         List<Integer> list = getBlackHeightsRecursive(root);
         int[] vs = new int[list.size()];
@@ -319,7 +355,9 @@ public class BinaryTree {
         node_x.parent = node_y;
 
         if (node_y.parent == null)
-            root = node_y; //TODO: I think this can be safely removed
+            root = node_y;
+        else
+            node_y.parent.left = node_y;
     }
 
     private void rightRotate(Node node_y) {
@@ -335,6 +373,8 @@ public class BinaryTree {
 
         if (node_x.parent == null)
             root = node_x;
+        else
+            node_x.parent.right = node_x;
     }
 
     public void leftRotateOnKey(int key) {
@@ -356,7 +396,7 @@ public class BinaryTree {
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
         // tree.inserts(new int[] {11,2,14,1,7,15,5,8,4});
-        tree.insertsRB(new int[]{3,2,1});
+        tree.insertsRB(new int[]{1,3,2});
         System.out.println(tree.root.colour);
 
         /*

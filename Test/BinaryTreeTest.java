@@ -76,48 +76,6 @@ public class BinaryTreeTest {
         assertTrue(tree.find(3));
     }
 
-    @Test(expected = BinaryTree.Empty.class)
-    public void newTreeDelete1_throwsEmpty() {
-        tree.delete(1);
-    }
-
-    @Test
-    public void add1Delete1_isEmpty() {
-        tree.insertRB(1);
-        tree.delete(1);
-        assertTrue(tree.isEmpty());
-    }
-
-    @Test
-    public void add123and4delete4_valuesAre123() {
-        int[] values = new int[]{1, 2, 3};
-        tree.insertsRB(values);
-        tree.insertRB(4);
-        tree.delete(4);
-        assertArrayEquals(values, tree.values());
-    }
-
-    @Test
-    public void add123delete2_valuesAre13() {
-        tree.insertsRB(new int[]{1,2,3});
-        tree.delete(2);
-        assertArrayEquals(new int[]{1,3}, tree.values());
-    }
-
-    @Test
-    public void add321delete2_valuesAre13() {
-        tree.insertsRB(new int[]{3,2,1});
-        tree.delete(2);
-        assertArrayEquals(new int[]{1,3}, tree.values());
-    }
-
-    @Test
-    public void add231delete2_valuesAre13() {
-        tree.insertsRB(new int[]{2,3,1});
-        tree.delete(2);
-        assertArrayEquals(new int[]{1,3}, tree.values());
-    }
-
     @Test
     public void add12_blackHeightsAre1() {
         tree.insertRB(1);

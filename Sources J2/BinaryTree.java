@@ -175,33 +175,6 @@ public class BinaryTree {
         familyNode.grandparent.colour = Colour.RED;
     }
 
-    public void delete(int key) {
-        root = deleteRecursive(root, key);
-    }
-
-    private Node deleteRecursive(Node root, int key) {
-        if (root == null)
-            throw new Empty();
-
-        if (key < root.key)
-            root.left = deleteRecursive(root.left, key);
-        else if (key > root.key)  //traverse right subtree
-            root.right = deleteRecursive(root.right, key);
-        else {
-            // node contains only one child
-            if (root.left == null)
-                return root.right;
-            else if (root.right == null)
-                return root.left;
-            else {
-                // DISASTER! Node has two children
-                root.key = minimumValueRecursive(root.right);
-                root.right = deleteRecursive(root.right, root.key);
-            }
-        }
-        return root;
-    }
-
     private List<Integer> getValuesRecursive(Node node) {
         if (node == null) return new ArrayList<>();
         List<Integer> left_values = getValuesRecursive(node.left);

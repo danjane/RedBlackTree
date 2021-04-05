@@ -16,6 +16,10 @@ public class BinaryTree {
             left = right = parent = null;
             colour = Colour.RED;
         }
+
+        public String toString() {
+            return String.valueOf(key);
+        }
     }
 
     static class FamilyNode extends Node {
@@ -68,6 +72,7 @@ public class BinaryTree {
     }
 
     private Node root = null;
+    private Node newNode = null;
 
     public boolean isEmpty() {
         return root==null;
@@ -100,6 +105,7 @@ public class BinaryTree {
 
     public void insertRB(int key) {
         root = insertRecursiveRB(root, key, null);
+        checkForLocalRedViolation(newNode);
         root.colour = Colour.BLACK; //TODO: should this be in fixRBtree?
     }
 
@@ -113,13 +119,7 @@ public class BinaryTree {
         if (root == null) {
             root = new Node(key);
             root.parent = parent;
-            checkForLocalRedViolation(root);
-/*          1. Every node is either red or black.
-            2. The root is black.
-            3. Every leaf (NIL) is black.
-            4. If a node is red, then both its children are black.
-            5. For each node, all simple paths from the node to descendant leaves contain the
-            same number of black nodes. */
+            newNode = root;
         }
         else if (key < root.key) {
             root.left = insertRecursiveRB(root.left, key, root);
@@ -131,6 +131,12 @@ public class BinaryTree {
     }
 
     private void checkForLocalRedViolation(Node node) {
+        /*  1. Every node is either red or black.
+            2. The root is black.
+            3. Every leaf (NIL) is black.
+            4. If a node is red, then both its children are black.
+            5. For each node, all simple paths from the node to descendant leaves contain the
+            same number of black nodes. */
         if (isRed(node)) {
             FamilyNode fNode = new FamilyNode(node);
             if (fNode.parentColour == Colour.RED)
@@ -144,6 +150,8 @@ public class BinaryTree {
             if (familyNode.grandparent != null)
                 checkForLocalRedViolation(familyNode.grandparent);
         }
+        else
+            leftRotate(familyNode.grandparent);
     }
 
     private void redUncleSoRecolour(FamilyNode familyNode) {
@@ -292,13 +300,14 @@ public class BinaryTree {
         node_y.parent = node_x.parent;
 
         node_x.right = node_y.left;
-        node_x.right.parent = node_x;
+        if (node_x.right != null)
+            node_x.right.parent = node_x;
 
         node_y.left = node_x;
         node_x.parent = node_y;
 
         if (node_y.parent == null)
-            root = node_y;
+            root = node_y; //TODO: I think this can be safely removed
     }
 
     private void rightRotate(Node node_y) {
@@ -334,7 +343,7 @@ public class BinaryTree {
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
         // tree.inserts(new int[] {11,2,14,1,7,15,5,8,4});
-        tree.insertsRB(new int[]{2,1,3,4});
+        tree.insertsRB(new int[]{1,2,3});
         System.out.println(tree.root.colour);
 
         /*

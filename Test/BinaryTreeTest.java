@@ -195,4 +195,10 @@ public class BinaryTreeTest {
         tree.insertsRB(new int[]{3,2,4,1});
         assertFalse(tree.redViolation());
     }
+
+    @Test
+    public void add123_RRrotation() {
+        tree.insertsRB(new int[]{1,2,3});
+        assertFalse(tree.redViolation());
+    }
 }

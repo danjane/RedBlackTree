@@ -215,6 +215,7 @@ public class BinaryTreeTest {
     public void add132_RLrotation() {
         tree.insertsRB(new int[]{1,3,2});
         assertArrayEquals(new int[]{1,2,3}, tree.values());
+        assertFalse(tree.blackViolation());
         assertFalse(tree.redViolation());
     }
 
@@ -224,5 +225,6 @@ public class BinaryTreeTest {
         tree.insertsRB(values);
         assertArrayEquals(values, tree.values());
         assertFalse(tree.blackViolation());
+        assertFalse(tree.redViolation());
     }
 }

@@ -19,7 +19,7 @@ public class BinaryTree {
         }
 
         public String toString() {
-            return String.valueOf(key);
+            return String.valueOf(key) + ", " + String.valueOf(colour);
         }
     }
 
@@ -164,28 +164,34 @@ public class BinaryTree {
     private void fixRBtree(FamilyNode familyNode) {
         if (familyNode.uncleColour==Colour.RED) {
             redUncleSoRecolour(familyNode);
-            if (familyNode.grandparent != null)
+            if (familyNode.grandparent != null) //TODO: this is always true?
                 checkForLocalRedViolation(familyNode.grandparent);
         }
         else {
             switch (familyNode.grandType) {
                 case RR:
                     leftRotate(familyNode.grandparent);
+                    familyNode.grandparent.colour = Colour.RED;
+                    familyNode.parent.colour = Colour.BLACK;
                     break;
                 case RL:
                     rightRotate(familyNode.parent);
                     leftRotate(familyNode.grandparent);
+                    familyNode.grandparent.colour = Colour.RED;
+                    familyNode.underlying.colour = Colour.BLACK;
                     break;
                 case LL:
                     rightRotate(familyNode.grandparent);
+                    familyNode.grandparent.colour = Colour.RED;
+                    familyNode.parent.colour = Colour.BLACK;
                     break;
                 case LR:
                     leftRotate(familyNode.parent);
                     rightRotate(familyNode.grandparent);
+                    familyNode.grandparent.colour = Colour.RED;
+                    familyNode.underlying.colour = Colour.BLACK;
                     break;
             }
-            familyNode.grandparent.colour = Colour.RED;
-            familyNode.parent.colour = Colour.BLACK;
         }
     }
 

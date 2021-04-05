@@ -167,30 +167,24 @@ public class BinaryTree {
             checkForLocalRedViolation(familyNode.grandparent);
         }
         else {
+            Node blacken = familyNode.parent;
             switch (familyNode.grandType) {
-                case RR:
-                    leftRotate(familyNode.grandparent);
-                    familyNode.grandparent.colour = Colour.RED;
-                    familyNode.parent.colour = Colour.BLACK;
-                    break;
                 case RL:
                     rightRotate(familyNode.parent);
+                    blacken = familyNode.underlying;
+                case RR:
                     leftRotate(familyNode.grandparent);
-                    familyNode.grandparent.colour = Colour.RED;
-                    familyNode.underlying.colour = Colour.BLACK;
                     break;
-                case LL:
-                    rightRotate(familyNode.grandparent);
-                    familyNode.grandparent.colour = Colour.RED;
-                    familyNode.parent.colour = Colour.BLACK;
-                    break;
+
                 case LR:
                     leftRotate(familyNode.parent);
+                    blacken = familyNode.underlying;
+                case LL:
                     rightRotate(familyNode.grandparent);
-                    familyNode.grandparent.colour = Colour.RED;
-                    familyNode.underlying.colour = Colour.BLACK;
                     break;
             }
+            familyNode.grandparent.colour = Colour.RED;
+            blacken.colour = Colour.BLACK;
         }
     }
 

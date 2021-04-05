@@ -324,8 +324,10 @@ public class BinaryTree {
 
         if (node_y.parent == null)
             root = node_y;
-        else
+        else if (node_y.parent.left == node_x)
             node_y.parent.left = node_y;
+        else if (node_y.parent.right == node_x)
+            node_y.parent.right = node_y;
     }
 
     private void rightRotate(Node node_y) {
@@ -341,7 +343,9 @@ public class BinaryTree {
 
         if (node_x.parent == null)
             root = node_x;
-        else
+        else if (node_x.parent.left == node_y)
+            node_x.parent.left = node_x;
+        else if (node_x.parent.right == node_y)
             node_x.parent.right = node_x;
     }
 
@@ -360,6 +364,12 @@ public class BinaryTree {
         System.out.println(tree.redViolation());
         System.out.println(tree.blackViolation());
         TreePrinter.print(tree.root);
+
+        BinaryTree tree2 = new BinaryTree();
+        for (int i = 1; i < 10; i++) {
+            tree2.insertRB(i);
+            TreePrinter.print(tree2.root);
+        }
     }
 
 }

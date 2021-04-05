@@ -143,8 +143,8 @@ public class BinaryTreeTest {
     }
 
     @Test
-    public void add123_noBlackViolation() {
-        int[] values = new int[]{1,2,3};
+    public void add12345_noBlackViolation() {
+        int[] values = new int[]{1,2,3,4,5};
         tree.insertsRB(values);
         assertArrayEquals(values, tree.values());
         assertFalse(tree.blackViolation());

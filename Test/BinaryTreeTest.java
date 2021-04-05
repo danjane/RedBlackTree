@@ -198,7 +198,17 @@ public class BinaryTreeTest {
 
     @Test
     public void add123_RRrotation() {
-        tree.insertsRB(new int[]{1,2,3});
+        int[] values = new int[]{1,2,3};
+        tree.insertsRB(values);
+        assertArrayEquals(values, tree.values());
+        assertFalse(tree.redViolation());
+    }
+
+    @Test
+    public void add321_LLrotation() {
+        int[] values = new int[]{3,2,1};
+        tree.insertsRB(values);
+        assertArrayEquals(values, tree.values());
         assertFalse(tree.redViolation());
     }
 }

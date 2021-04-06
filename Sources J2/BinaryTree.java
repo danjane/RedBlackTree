@@ -311,6 +311,18 @@ public class BinaryTree {
         }
     }
 
+    private boolean lostParentsRecursive(Node node) {
+        return (
+                ((node.left  != null) && (node.left.parent  != node || lostParentsRecursive(node.left)) )
+                ||
+                ((node.right != null) && (node.right.parent != node || lostParentsRecursive(node.right)) )
+        );
+    }
+
+    public boolean lostParents() {
+        return lostParentsRecursive(root);
+    }
+
     private void leftRotate(Node node_x) {
         Node node_y = node_x.right;
         node_y.parent = node_x.parent;

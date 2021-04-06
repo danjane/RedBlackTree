@@ -150,4 +150,12 @@ public class BinaryTreeTest {
         assertFalse(tree.blackViolation());
         assertFalse(tree.redViolation());
     }
+
+    @Test
+    public void add12345_checkParentPointers() {
+        int[] values = new int[]{1,2,3,4,5};
+        tree.insertsRB(values);
+        assertArrayEquals(values, tree.values());
+        assertFalse(tree.lostParents());
+    }
 }

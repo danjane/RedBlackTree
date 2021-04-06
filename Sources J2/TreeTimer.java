@@ -28,12 +28,12 @@ public class TreeTimer {
         boolean valuesOk = true;
         for (int i : tree.values())
             valuesOk = valuesOk && i == expected++;
-        System.out.println("  ValuesCorrupted : " + valuesOk);
+        System.out.println("  ValuesCorrupted : " + !valuesOk);
     }
 
 
     public static void main(String[] args) {
-        int size = 1000000;
+        int size = 10000000;
 
         BinaryTree tree = new BinaryTree();
         Stack<Integer> ints = shuffledIntegers(size);

@@ -169,18 +169,18 @@ public class BinaryTree {
         else {
             Node blacken = familyNode.parent;
             switch (familyNode.grandType) {
-                case RL:
-                    rightRotate(familyNode.parent);
-                    blacken = familyNode.underlying;
-                case RR:
-                    leftRotate(familyNode.grandparent);
-                    break;
-
                 case LR:
                     leftRotate(familyNode.parent);
                     blacken = familyNode.underlying;
                 case LL:
                     rightRotate(familyNode.grandparent);
+                    break;
+
+                case RL:
+                    rightRotate(familyNode.parent);
+                    blacken = familyNode.underlying;
+                case RR:
+                    leftRotate(familyNode.grandparent);
                     break;
             }
             familyNode.grandparent.colour = Colour.RED;

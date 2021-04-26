@@ -128,6 +128,14 @@ public class BinaryTreeTest {
     }
 
     @Test
+    public void add12345_checkParentPointers() {
+        int[] values = new int[]{1,2,3,4,5};
+        tree.insertsRB(values);
+        assertArrayEquals(values, tree.values());
+        assertFalse(tree.lostParents());
+    }
+
+    @Test
     public void add321_LLrotation() {
         tree.insertsRB(new int[]{3,2,1});
         assertArrayEquals(new int[]{1,2,3}, tree.values());
@@ -149,13 +157,5 @@ public class BinaryTreeTest {
         assertArrayEquals(values, tree.values());
         assertFalse(tree.blackViolation());
         assertFalse(tree.redViolation());
-    }
-
-    @Test
-    public void add12345_checkParentPointers() {
-        int[] values = new int[]{1,2,3,4,5};
-        tree.insertsRB(values);
-        assertArrayEquals(values, tree.values());
-        assertFalse(tree.lostParents());
     }
 }

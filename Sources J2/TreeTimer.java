@@ -6,29 +6,38 @@ import java.util.Stack;
 public class TreeTimer {
 
     public static Stack<Integer> shuffledIntegers(int size) {
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = new ArrayList<>();
         for (int i = 0; i < size; i++)
             list.add(i);
         java.util.Collections.shuffle(list,  new Random(0));
 
-        Stack<Integer> stack = new Stack<Integer>();
+        Stack<Integer> stack = new Stack<>();
         for (Integer e: list)
             stack.push(e);
 
         return stack;
     }
 
-    private static void checkTree(BinaryTree tree) {
+    public static boolean checkTree(BinaryTree tree) {
         System.out.println("Checking tree after insertions...");
-        System.out.println("  RedViolation    : " + tree.redViolation());
-        System.out.println("  BlackViolation  : " + tree.blackViolation());
-        System.out.println("  PointerViolation: " + tree.lostParents());
+
+        boolean redViolation = tree.redViolation();
+        System.out.println("  RedViolation    : " + redViolation);
+
+        boolean blackViolation = tree.blackViolation();
+        System.out.println("  BlackViolation  : " + blackViolation);
+
+        boolean lostParents = tree.lostParents();
+        System.out.println("  PointerViolation: " + lostParents);
 
         int expected = 0;
         boolean valuesOk = true;
         for (int i : tree.values())
             valuesOk = valuesOk && i == expected++;
-        System.out.println("  ValuesCorrupted : " + !valuesOk);
+        boolean valueViolation = !valuesOk;
+        System.out.println("  ValuesCorrupted : " + valueViolation);
+
+        return !(redViolation || blackViolation || lostParents || valueViolation);
     }
 
 

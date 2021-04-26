@@ -45,8 +45,7 @@ public class TreeTimerTest {
 
     @Test
     public void stringbuilder_1and2() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Size,Time\n");
+        StringBuilder sb = new StringBuilder("Size,Time\n");
         sb = TreeTimer.appendResult(sb, 1,2);
         assertEquals("Size,Time\n1,2\n", sb.toString());
     }

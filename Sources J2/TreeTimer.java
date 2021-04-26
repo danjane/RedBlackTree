@@ -40,10 +40,7 @@ public class TreeTimer {
         return !(redViolation || blackViolation || lostParents || valueViolation);
     }
 
-
-    public static void main(String[] args) {
-        int size = 1000000;
-
+    public static long timeSetOfInsertions(int size) {
         BinaryTree tree = new BinaryTree();
         Stack<Integer> ints = shuffledIntegers(size);
 
@@ -55,8 +52,18 @@ public class TreeTimer {
         long millis = (endTime - startTime) / 1000000;
 
         // tree.print(); // too big
-        checkTree(tree);
+        if (!checkTree(tree))
+            throw new RuntimeException("Tree fail with size" + size);
+
         System.out.println("Time taken: " + millis + " ms");
+        return millis;
+    }
+
+
+    public static void main(String[] args) {
+        int size = 1000000;
+
+
 
     }
 

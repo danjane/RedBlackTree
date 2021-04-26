@@ -31,4 +31,10 @@ public class TreeTimerTest {
         assertTrue(TreeTimer.checkTree(tree));
     }
 
+    @Test
+    public void timer_returnsPositiveLong() {
+        long millis = TreeTimer.timeSetOfInsertions(100);
+        assertTrue(millis > 0);
+    }
+
 }

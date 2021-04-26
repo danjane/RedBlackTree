@@ -5,6 +5,10 @@ import java.util.Stack;
 
 public class TreeTimer {
 
+    private static void print(String s) {
+        System.out.println(s);
+    }
+
     public static Stack<Integer> shuffledIntegers(int size) {
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < size; i++)
@@ -22,20 +26,20 @@ public class TreeTimer {
         System.out.println("Checking tree after insertions...");
 
         boolean redViolation = tree.redViolation();
-        System.out.println("  RedViolation    : " + redViolation);
+        print("  RedViolation    : " + redViolation);
 
         boolean blackViolation = tree.blackViolation();
-        System.out.println("  BlackViolation  : " + blackViolation);
+        print("  BlackViolation  : " + blackViolation);
 
         boolean lostParents = tree.lostParents();
-        System.out.println("  PointerViolation: " + lostParents);
+        print("  PointerViolation: " + lostParents);
 
         int expected = 0;
         boolean valuesOk = true;
         for (int i : tree.values())
             valuesOk = valuesOk && i == expected++;
         boolean valueViolation = !valuesOk;
-        System.out.println("  ValuesCorrupted : " + valueViolation);
+        print("  ValuesCorrupted : " + valueViolation);
 
         return !(redViolation || blackViolation || lostParents || valueViolation);
     }
@@ -55,7 +59,7 @@ public class TreeTimer {
         if (!checkTree(tree))
             throw new RuntimeException("Tree fail with size" + size);
 
-        System.out.println("Time taken: " + millis + " ms");
+        print("Time taken: " + millis + " ms");
         return millis;
     }
 

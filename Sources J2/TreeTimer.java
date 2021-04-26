@@ -63,6 +63,11 @@ public class TreeTimer {
         return millis;
     }
 
+    public static StringBuilder appendResult(StringBuilder sb, int size, int time) {
+        sb.append(size).append(",").append(time).append("\n");
+        return sb;
+    }
+
 
     public static void main(String[] args) {
         int size = 1000000;

@@ -37,4 +37,18 @@ public class TreeTimerTest {
         assertTrue(millis > 0);
     }
 
+    @Test
+    public void stringbuilder_empty() {
+        StringBuilder sb = new StringBuilder();
+        assertSame("", sb.toString());
+    }
+
+    @Test
+    public void stringbuilder_1and2() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Size,Time\n");
+        sb = TreeTimer.appendResult(sb, 1,2);
+        assertEquals("Size,Time\n1,2\n", sb.toString());
+    }
+
 }

@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class TreeTimer {
 
-    private static Stack<Integer> shuffledIntegers(int size) {
+    public static Stack<Integer> shuffledIntegers(int size) {
         List<Integer> list = new ArrayList<Integer>();
         for (int i = 0; i < size; i++)
             list.add(i);
@@ -33,7 +33,7 @@ public class TreeTimer {
 
 
     public static void main(String[] args) {
-        int size = 10000000;
+        int size = 1000000;
 
         BinaryTree tree = new BinaryTree();
         Stack<Integer> ints = shuffledIntegers(size);
